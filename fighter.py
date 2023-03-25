@@ -32,7 +32,7 @@ class Player():
                 temp_img_list.append(pygame.transform.scale(temp_img,(self.size*self.image_scale,self.size*self.image_scale)))
             animation_list.append(temp_img_list)
         return animation_list
-    def move(self,szerokosc_okna,wysokosc_okna,surface,target):
+    def move(self,szerokosc_okna,wysokosc_okna,surface,target,koniec_rundy):
         Speed = 10
         Grawitacja=2
         dx = 0
@@ -42,7 +42,7 @@ class Player():
         #wychwyc wcisniety klawisz
         key=pygame.key.get_pressed()
         #tylko jesli nie atakuje
-        if self.w_trakcie_ataku==False and self.alive==True:
+        if self.w_trakcie_ataku==False and self.alive==True and koniec_rundy==False:
             #sprawdz ktory gracz
             if self.gracz==1:
                 #atak
@@ -113,23 +113,23 @@ class Player():
         if self.zdrowie<=0:
             self.zdrowie=0
             self.alive=False
-            self.update_action(3)
+            self.update_action(4)
         #wybor animacji
         elif self.trafienie==True:
-            self.update_action(4)
+            self.update_action(3)
         elif self.w_trakcie_ataku==True:
             if self.typ_ataku==1:
-                self.update_action(0)
+                self.update_action(5)
             elif self.typ_ataku==2:
-                self.update_action(1)
+                self.update_action(6)
         elif self.skok==True:
-            self.update_action(6)
+            self.update_action(7)
         elif self.running==True:
-            self.update_action(8)
+            self.update_action(2)
         else:
-            self.update_action(5)
+            self.update_action(0)
 
-        animation_cooldown=200
+        animation_cooldown=100
         #wyswietl wybrana animacje
         self.image=self.animation_list[self.action][self.frame_index]
         #zmiana klatki animacji
@@ -144,10 +144,10 @@ class Player():
             else:
                 self.frame_index=0
                 #obsluga cooldowna ataku
-                if self.action==0 or self.action==1 or self.action==2:
+                if self.action==5 or self.action==6:
                     self.w_trakcie_ataku=False
                     self.attack_cooldown=50
-                if self.action==4:
+                if self.action==3:
                     self.trafienie=False
                     #jezeli gracz jest trafiony w trakcie animacji animacja jest przerwana
                     self.w_trakcie_ataku=False
@@ -155,7 +155,7 @@ class Player():
         
 
     def attack(self,surface,target):
-        if self.attack_cooldown==0:
+        if self.attack_cooldown==0 and self.trafienie==False:
             self.w_trakcie_ataku=True
             attacking_rect=pygame.Rect(self.rect.centerx-2*self.rect.width*self.flip,self.rect.y,2 * self.rect.width,self.rect.height)
             if attacking_rect.colliderect(target.rect):
