@@ -93,10 +93,14 @@ class Player():
             dx=-self.rect.left
         if self.rect.right+dx>szerokosc_okna:
             dx=szerokosc_okna-self.rect.right
-        if self.rect.bottom+dy>=wysokosc_okna-110:
+        if self.rect.bottom+dy>=wysokosc_okna-180:
             self.vel_y=0
             self.skok=False
-            dy=wysokosc_okna-110-self.rect.bottom
+            dy=wysokosc_okna-180-self.rect.bottom
+        if self.flip==False and self.rect.colliderect(target.rect):
+            self.rect.right=target.rect.left+1
+        if self.flip==True and self.rect.colliderect(target.rect):
+            self.rect.left=target.rect.right-1
         #kierunek gracza
         if target.rect.centerx>self.rect.centerx:
             self.flip=False
@@ -172,6 +176,6 @@ class Player():
 
     def draw(self,surface):
         img=pygame.transform.flip(self.image,self.flip,False)
-        pygame.draw.rect(surface,(255,0,0),self.rect)
+        #pygame.draw.rect(surface,(255,0,0),self.rect)
         surface.blit(img,(self.rect.x-self.offset[0]*self.image_scale,self.rect.y-self.offset[1]*self.image_scale))
 

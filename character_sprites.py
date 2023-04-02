@@ -30,11 +30,24 @@ def check_hero_chosen(hero,player):
         player_size=128
         player_scale=2
         if player==1:
-            player_offset=[12,47]
+            player_offset=[38,47]
         else:
-            player_offset=[76,47]
+            player_offset=[48,47]
         kroki_animacji=[8,7,8,4,4,7,9,8]
         postac="Nomad_Mage/"
+        sprajty=["Idle.png","Walk.png","Run.png","Hurt.png","Dead.png","Attack_1.png","Attack_2.png","Jump.png"]
+        tekstury=generate_sprites(postac,sprajty)
+        player_data=[[player_size,player_scale,player_offset],tekstury,kroki_animacji]
+        return player_data
+    elif hero==3:
+        player_size=128
+        player_scale=2
+        if player==1:
+            player_offset=[32,47]
+        else:
+            player_offset=[56,47]
+        kroki_animacji=[7,7,6,3,5,4,4,6]
+        postac="Skeleton_Spearman/"
         sprajty=["Idle.png","Walk.png","Run.png","Hurt.png","Dead.png","Attack_1.png","Attack_2.png","Jump.png"]
         tekstury=generate_sprites(postac,sprajty)
         player_data=[[player_size,player_scale,player_offset],tekstury,kroki_animacji]

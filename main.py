@@ -11,22 +11,22 @@ pygame.display.set_caption("Fantasy Fighter")
 clock=pygame.time.Clock()
 FPS=60
 #Deklaracja tekstur
-tlo=pygame.image.load("assets/images/background/tlo_tiles.png").convert_alpha()
+tlo=pygame.image.load("assets/images/background/Battleground2/Pale/Battleground2.png").convert_alpha()
 #deklaracja czcionki
 czcionka_odliczania=pygame.font.Font("assets/fonts/Planes_ValMore.ttf",80)
 czcionka_punktow=pygame.font.Font("assets/fonts/Planes_ValMore.ttf",35)
 #ekran wygranej
 wygrana_prompt=pygame.image.load("assets/images/icons/victory.png").convert_alpha()
 #dane graczy
-gracz_1_dane=character_sprites.check_hero_chosen(0,1)
-gracz_2_dane=character_sprites.check_hero_chosen(2,2)
+gracz_1_dane=character_sprites.check_hero_chosen(1,1)
+gracz_2_dane=character_sprites.check_hero_chosen(3,2)
 #Funkcje zwiazane z rysowaniem tekstur
 def rysuj_tlo():
     tlo_przeskalowane=pygame.transform.scale(tlo,(Szerokosc_okna,Wysokosc_okna))
     okno.blit(tlo_przeskalowane,(0,0))
 #Funkcje zwiazane z silnikiem gry
-fighter_1=Player(1,200,310,False,gracz_1_dane[0],gracz_1_dane[1],gracz_1_dane[2])
-fighter_2=Player(2,700,310,True,gracz_2_dane[0],gracz_2_dane[1],gracz_2_dane[2])
+fighter_1=Player(1,200,450,False,gracz_1_dane[0],gracz_1_dane[1],gracz_1_dane[2])
+fighter_2=Player(2,950,450,True,gracz_2_dane[0],gracz_2_dane[1],gracz_2_dane[2])
 #Rysowanie paskow zdrowia
 def rysuj_pasek_zdrowia(zdrowie,x,y):
     ratio= zdrowie/100
@@ -50,15 +50,15 @@ while run:
     clock.tick(FPS)
     rysuj_tlo()
     rysuj_pasek_zdrowia(fighter_1.zdrowie,20,20)
-    rysuj_pasek_zdrowia(fighter_2.zdrowie,620,20)
+    rysuj_pasek_zdrowia(fighter_2.zdrowie,760,20)
     rysuj_tekst("P1: "+str(wygrane[0]),czcionka_punktow,(255,0,0),20,60)
-    rysuj_tekst("P2: "+str(wygrane[1]),czcionka_punktow,(255,0,0),520,60)
+    rysuj_tekst("P2: "+str(wygrane[1]),czcionka_punktow,(255,0,0),760,60)
     if odliczanie_rundy<=0:
         fighter_1.move(Szerokosc_okna,Wysokosc_okna,okno,fighter_2,koniec_rundy)
         fighter_2.move(Szerokosc_okna,Wysokosc_okna,okno,fighter_1,koniec_rundy)
     else:
         #wyswietl licznik
-        rysuj_tekst(str(odliczanie_rundy),czcionka_odliczania,(0,255,0),Szerokosc_okna/2,Wysokosc_okna/3)
+        rysuj_tekst(str(odliczanie_rundy),czcionka_odliczania,(0,0,0),Szerokosc_okna/2,Wysokosc_okna/3)
         #updatuj licznik
         if(pygame.time.get_ticks()-ostatni_update_odliczania)>=1000:
             odliczanie_rundy-=1
@@ -78,12 +78,12 @@ while run:
             koniec_rundy=True
             round_over_time=pygame.time.get_ticks()
     else:
-        okno.blit(wygrana_prompt,(150,150))
+        okno.blit(wygrana_prompt,(375,350))
         if pygame.time.get_ticks()-round_over_time>round_over_cooldown:
             koniec_rundy=False
             odliczanie_rundy=3
-            fighter_1=Player(1,200,310,False,gracz_1_dane[0],gracz_1_dane[1],gracz_1_dane[2])
-            fighter_2=Player(2,700,310,True,gracz_2_dane[0],gracz_2_dane[1],gracz_2_dane[2])
+            fighter_1=Player(1,200,450,False,gracz_1_dane[0],gracz_1_dane[1],gracz_1_dane[2])
+            fighter_2=Player(2,950,450,True,gracz_2_dane[0],gracz_2_dane[1],gracz_2_dane[2])
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             run=False
