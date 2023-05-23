@@ -166,7 +166,7 @@ class Player():
                 print("hit")
                 target.zdrowie-=10
                 target.trafienie=True
-            pygame.draw.rect(surface,(0,255,0),attacking_rect)
+            #pygame.draw.rect(surface,(0,255,0),attacking_rect)
 
     def update_action(self,new_action):
         if new_action != self.action:
