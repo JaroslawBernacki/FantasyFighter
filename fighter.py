@@ -21,7 +21,9 @@ class Player():
         self.zdrowie=100
         self.alive=True
         self.trafienie=False
-        
+        #attack sounds
+        self.strike_one_sfx=pygame.mixer.Sound("assets/sound/slash.mp3")
+        self.strike_two_sfx=pygame.mixer.Sound("assets/sound/swoosh.mp3")
     def load_images(self,sprajt,kroki_animacji):
         animation_list=[]
         for y,animation in enumerate(kroki_animacji):
@@ -74,7 +76,7 @@ class Player():
                         self.typ_ataku=1
                     if key[pygame.K_KP2]:
                         self.typ_ataku=2
-
+                        
                 #ruch graczy
                 if key[pygame.K_LEFT]:
                     dx=-Speed
@@ -124,8 +126,10 @@ class Player():
         elif self.w_trakcie_ataku==True:
             if self.typ_ataku==1:
                 self.update_action(5)
+                self.strike_one_sfx.play()
             elif self.typ_ataku==2:
                 self.update_action(6)
+                self.strike_two_sfx.play()
         elif self.skok==True:
             self.update_action(7)
         elif self.running==True:
